@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <fragment
+
+        android:id="@+id/fragment_content"
+        android:name="com.example.rover.grow_plant.DeviceFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+
+    <fragment
+
+        android:id="@+id/fragment_content_2"
+        android:name="com.example.rover.grow_plant.GroupFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+
+    <fragment
+
+        android:id="@+id/fragment_content_3"
+        android:name="com.example.rover.grow_plant.TimerFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+
+    <fragment
+
+        android:id="@+id/fragment_content_4"
+        android:name="com.example.rover.grow_plant.MoreFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+
+
+
+    <fragment
+        android:id="@+id/fragment_bottom"
+        android:name="com.example.rover.grow_plant.TabbarFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        />
+
+
+
+</RelativeLayout>
