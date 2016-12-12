@@ -4,11 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/test"
+    <ImageButton
+        android:id="@+id/switchBtn_device"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="#30f0aa"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#00f0f0"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/switchBtn_device"
+        android:layout_marginTop="40dp">
+        <SeekBar
+            android:id="@+id/bar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            />
+
+        <TextView
+            android:id="@+id/valuelable_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/bar1"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorAccent"
+            android:text="hello"
+            />
+
+    </LinearLayout>
+
+
+
+    <SeekBar
+        android:id="@+id/bar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:layout_below="@id/bar1"
+
+        />
 
 
 

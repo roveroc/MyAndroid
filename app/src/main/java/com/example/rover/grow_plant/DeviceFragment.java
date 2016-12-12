@@ -200,6 +200,8 @@ public class DeviceFragment extends ListFragment implements View.OnClickListener
                         int index = (int)v.getTag();
                         DeviceStruct ds = (DeviceStruct) list_.get(index);
                         Log.i("test", "A A:" + ds.getDevice_name());
+
+                        lcallback.roverListItemSelected(ds);
                     }
                 });
 
@@ -226,7 +228,6 @@ public class DeviceFragment extends ListFragment implements View.OnClickListener
                         Log.i("test", "A A:" + ds.getDevice_name());
 
                         lcallback.roverListItemSelected(ds);
-
 
                     }
                 });
