@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 
 /**
  * Created by rover on 2016/12/9.
@@ -20,6 +22,8 @@ public class DeviceControlActivity extends Activity implements SeekBar.OnSeekBar
     private ImageButton switchBtn;
     private SeekBar     slider1;
     private SeekBar     slider2;
+    private TextView    textView1;
+    private TextView    textView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,9 @@ public class DeviceControlActivity extends Activity implements SeekBar.OnSeekBar
                 Log.i("switch btn","Clicked");
             }
         });
+
+        textView1 = (TextView)this.findViewById(R.id.valuelable_1);
+        textView2 = (TextView)this.findViewById(R.id.valuelable_2);
 
         slider1   = (SeekBar)this.findViewById(R.id.bar1);
         slider1.setMax(90);
@@ -76,10 +83,12 @@ public class DeviceControlActivity extends Activity implements SeekBar.OnSeekBar
         switch (seekBar.getId()){
             case R.id.bar1:{
                 Log.d("slider11  slider11", "value = :" + progress);
+                textView1.setText(progress+"%");
             }
                 break;
             case R.id.bar2:{
                 Log.d("slider22  slider22", "value = :" + progress);
+                textView2.setText(progress+"%");
             }
                 break;
             default:

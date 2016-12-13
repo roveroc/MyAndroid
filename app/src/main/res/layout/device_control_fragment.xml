@@ -14,42 +14,66 @@
         />
 
     <LinearLayout
+        android:id="@+id/slider_layout1"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/switchBtn_device"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="80dp"
+        >
+
         <SeekBar
             android:id="@+id/bar1"
-            android:layout_width="match_parent"
+            android:layout_width="10dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10dp"
+            android:layout_weight="9"
             />
+
 
         <TextView
             android:id="@+id/valuelable_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/bar1"
-            android:layout_marginRight="10dp"
-            android:background="@color/colorAccent"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:layout_weight="2"
             android:text="hello"
             />
+
+
+
+
 
     </LinearLayout>
 
 
-
-    <SeekBar
-        android:id="@+id/bar2"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:layout_below="@id/bar1"
+        android:layout_below="@id/slider_layout1"
+        android:layout_marginTop="80dp"
+        >
 
-        />
+        <SeekBar
+            android:id="@+id/bar2"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            />
+
+        <TextView
+            android:id="@+id/valuelable_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="hello"
+            />
+
+    </LinearLayout>>
 
 
 
