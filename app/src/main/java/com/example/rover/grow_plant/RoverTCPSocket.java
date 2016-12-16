@@ -12,6 +12,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.SocketAddress;
 import java.net.InetSocketAddress;
+import java.net.SocketTimeoutException;
 
 /**
  * Created by rover on 2016/12/14.
@@ -57,26 +58,32 @@ public class RoverTCPSocket implements Runnable{
             @Override
             public void run() {
                 try {
-                    if (socket == null) {
+//                    if (socket == null)
+                    {
                         socket = new Socket();
-
-                        SocketAddress address = new InetSocketAddress(host, hostPort);
-                        socket.connect(address, 1000);// 连接指定IP和端口
-
-                        if (socket.isConnected()) {
-                            inputStream = socket.getInputStream();
-                            outputStream = socket.getOutputStream();
-                            mListener.connected();
-                        }
-
                     }
-                    Log.i("connect", "here");
-                } catch (IOException ex) {
-                    Log.i("异常 ", "ex = ", ex);
+                    SocketAddress address = new InetSocketAddress(host, hostPort);
+                    socket.connect(address, 1000);      //设置连接主机和超时时间
+
+                    if (socket.isConnected()) {
+                        inputStream = socket.getInputStream();
+                        outputStream = socket.getOutputStream();
+                        mListener.connected();
+                        Log.i("连接成功", "连接成功");
+                    }
+
+                } catch (SocketTimeoutException e) {
+                    System.err.println("SocketTimeoutException: " + e.getMessage());
+
+                } catch (IOException e) {
+                    System.err.println("IOException: " + e);
+
+                } catch (Exception e) {
+                    System.err.println("Exception: " + e.getMessage());
                 }
 
-
                 Log.i("连接socket", "结果" + socket);
+
 
 
                 try {
@@ -87,14 +94,16 @@ public class RoverTCPSocket implements Runnable{
                     while ((len = inputStream.read(buffer)) != -1) {
 
                         String data = new String(buffer, 0, len);
-                        //通过回调接口将获取到的数据推送出去
+                        //通过回调接口将获取到的数据推送出去    接收数据
                         if (mListener != null) {
                             mListener.onReceiveData(data);
                         }
                     }
                 }catch (IOException ex) {
-                    Log.i("异常 ", "ex = ", ex);
+                    Log.i("异常 ", "ex = " + ex.getMessage());
                 }
+
+
             }
         }).start();
     }
@@ -118,30 +127,23 @@ public class RoverTCPSocket implements Runnable{
 
 
 
-    public void sendData(String data) throws IOException {
-        Log.i("fuck ","fuck fuckfuckfuck大发送方式的发生的");
+    public void sendData(final String data) throws IOException {
         new Thread(new Runnable() {
-
             @Override
             public void run() {
-
-                Log.i("fuck ","fuck fuckfuckfuck");
-                OutputStream os = null;
-
                 try {
-                    DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
-                    byte data[]="abcd".getBytes();
-                    out.write(data);
-
-                    out.flush();
-
-
-                    Log.i("fuck ","fuck ");
-
+                    if(socket.isConnected()) {
+                        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                        byte bbdata[] = data.getBytes();
+                        out.write(bbdata);
+                        out.flush();
+                        Log.i("------->", " 发送数据成功");
+                    }else {
+                        Log.i("-------> ", "socket已断开连接");
+                    }
                 } catch (IOException e) {
 
-                    Log.i("IOException","IOException",e);
+                    Log.i("发送数据异常","异常 = ",e);
                 }
             }
         }).start();

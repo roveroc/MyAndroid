@@ -18,7 +18,6 @@ import org.w3c.dom.Text;
 
 public class DeviceControlActivity extends Activity implements SeekBar.OnSeekBarChangeListener{
 
-
     private ImageButton switchBtn;
     private SeekBar     slider1;
     private SeekBar     slider2;
@@ -89,6 +88,8 @@ public class DeviceControlActivity extends Activity implements SeekBar.OnSeekBar
             case R.id.bar2:{
                 Log.d("slider22  slider22", "value = :" + progress);
                 textView2.setText(progress+"%");
+
+                GrowPlantGlobal.getInstance().sendDataToHost("text");
             }
                 break;
             default:

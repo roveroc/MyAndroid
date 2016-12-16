@@ -17,9 +17,6 @@ import java.io.IOException;
 public class MoreFragment extends Fragment implements RoverTCPSocket.ConnectListener{
 
 
-    private RoverTCPSocket tcpSocket;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -32,28 +29,9 @@ public class MoreFragment extends Fragment implements RoverTCPSocket.ConnectList
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(tcpSocket == null){
-                    RoverTCPSocket.ConnectListener lcon = new RoverTCPSocket.ConnectListener() {
-                        @Override
-                        public void onReceiveData(String data) {
-                            Log.i("TCP主机返回的数据"," = "+data);
-                        }
 
-                        @Override
-                        public void connected() {
-                            Log.i("TCP主机返回的数据"," 连接成功   123");
-                        }
-                    };
-                    tcpSocket = new RoverTCPSocket(lcon);
-                    tcpSocket.host = "192.168.1.183";
-                    tcpSocket.hostPort = 5000;
-                    try {
-                        tcpSocket.connectToHost();
-                        Log.i("connect","here");
-                    }catch (IOException ex){
-                        Log.i("异常 ","ex = ",ex);
-                    }
-                }
+                GrowPlantGlobal.getInstance().connectToHost();
+
             }
         });
 
@@ -63,23 +41,17 @@ public class MoreFragment extends Fragment implements RoverTCPSocket.ConnectList
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    tcpSocket.sendData("fuck");
-                    Log.i("发送数据","发送数据");
-                }catch (IOException io){
-                    Log.i("发送数据异常","don't do this");
-                }
+
+                GrowPlantGlobal.getInstance().sendDataToHost("text");
 
             }
         });
-
 
         return view;
     }
 
 
     public void onReceiveData(String data){
-
 
         Log.i("TCP主机返回的数据"," = "+data);
 
