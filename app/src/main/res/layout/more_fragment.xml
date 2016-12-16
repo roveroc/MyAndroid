@@ -4,14 +4,27 @@
     android:layout_height="match_parent">
 
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="100%"
-        android:background="@color/colorPrimaryDark"
+    <ImageButton
+        android:id="@+id/connectBtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="#8080ff"
         />
+
+
+    <ImageButton
+        android:id="@+id/sendDataBtn"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="#80ffff"
+        android:layout_marginTop="100dp"
+        android:layout_below="@id/connectBtn"
+        />
+
+
+
 
 
 </LinearLayout>
