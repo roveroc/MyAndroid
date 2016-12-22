@@ -1,5 +1,7 @@
 package com.example.rover.grow_plant;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.ImageView;
 
 
 /**
@@ -26,7 +30,12 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
     private SeekBar         speedBar;
     private TextView        speedBarValueText;
 
+    private ImageView       switchImageView;        //开关
+    private ImageView       playPauseImageView;     //播放暂停
+    private Button          customBtn;              //自定义
 
+    private boolean         switchFlag;
+    private boolean         playFlag;
 
 
     @Override
@@ -34,6 +43,9 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.test_learn_something);
+
+        switchFlag = true;
+        playFlag   = true;
 
         //色盘取色
         colorView = (ColorPickerView)findViewById(R.id.colorView);
@@ -103,6 +115,48 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
         });
 
 
+        //开关
+        switchImageView = (ImageView)findViewById(R.id.switchBtn);
+        switchImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(switchFlag == true){
+                    switchImageView.setBackgroundResource(R.mipmap.off);
+                    switchFlag = false;
+                }else{
+                    switchImageView.setBackgroundResource(R.mipmap.on);
+                    switchFlag = true;
+                }
+            }
+        });
+
+        //播放暂停
+        playPauseImageView = (ImageView)findViewById(R.id.playPauseBtn);
+        playPauseImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(playFlag == true){
+                    playPauseImageView.setBackgroundResource(R.mipmap.pause);
+                    playFlag = false;
+                }else{
+                    playPauseImageView.setBackgroundResource(R.mipmap.play);
+                    playFlag = true;
+                }
+            }
+        });
+
+        //自定义
+        customBtn = (Button)findViewById(R.id.CustomBtn);
+        customBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent();
+                intent.setClass(Test_learn_Something.this, Cutom_Color_Activity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
     }

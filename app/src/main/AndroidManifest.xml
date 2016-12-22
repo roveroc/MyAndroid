@@ -27,6 +27,8 @@
 
         <activity android:name=".Test_learn_Something"/>
 
+        <activity android:name=".Cutom_Color_Activity"/>
+
 
     </application>
 
