@@ -19,9 +19,38 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:background="#80ffff"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:layout_below="@id/connectBtn"
         />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <ToggleButton
+            android:id="@+id/tog1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:textOff="关闭声音"
+            android:textOn="打开声音"
+            android:layout_marginLeft="50dp"
+            />
+
+        <Switch
+            android:id="@+id/swi1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tog1"
+            android:layout_marginLeft="150dp"
+            android:thumb="@mipmap/ic_launcher"
+            android:track="@mipmap/ic_launcher"/>
+
+
+    </RelativeLayout>
+
 
 
 

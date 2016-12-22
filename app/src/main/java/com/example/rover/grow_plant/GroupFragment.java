@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CompoundButton;
 
 /**
  * Created by rover on 2016/12/7.
@@ -88,26 +90,30 @@ public class GroupFragment extends ListFragment{
             TextView textView = null;
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.device_fragment_listview,
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.group_fragment_listview,
                         null);
                 textView = (TextView)convertView.findViewById(R.id.devicename);
 
-                ImageButton btn = (ImageButton) convertView.findViewById(R.id.devicearrow);
-                btn.setTag(position);
 
-                btn.setOnClickListener(new View.OnClickListener(){
+                final CheckBox box = (CheckBox) convertView.findViewById(R.id.box);
+                box.setTag(position);
+
+
+                box.setOnCheckedChangeListener(new OnCheckedChangeListener(){
                     @Override
-                    public void onClick(View v) {
+                    public void onCheckedChanged(CompoundButton buttonView,
+                                                 boolean isChecked) {
 
-
-                        int index = (int)v.getTag();
-                        DeviceStruct ds = (DeviceStruct) list_.get(index);
-                        Log.i("test", "A A:" + ds.getDevice_name());
-
-
+                        DeviceStruct device = (DeviceStruct) list_.get((int)box.getTag());
+                        if(isChecked) {
+                            Log.i("选中", "A A:" + device.getDevice_name());
+                        }else {
+                            Log.i("取消", "B B:" + device.getDevice_name());
+                        }
                     }
-
                 });
+
+
 
                 DeviceStruct device = (DeviceStruct) list_.get(position);
 
@@ -121,18 +127,21 @@ public class GroupFragment extends ListFragment{
 
                 textView = (TextView)convertView.findViewById(R.id.devicename);
 
-                ImageButton btn = (ImageButton) convertView.findViewById(R.id.devicearrow);
-                btn.setTag(position);
+                final CheckBox box = (CheckBox) convertView.findViewById(R.id.box);
+                box.setTag(position);
 
-                btn.setOnClickListener(new View.OnClickListener(){
+
+                box.setOnCheckedChangeListener(new OnCheckedChangeListener(){
                     @Override
-                    public void onClick(View v) {
-                        int index = (int)v.getTag();
-                        DeviceStruct ds = (DeviceStruct) list_.get(index);
-                        Log.i("test", "A A:" + ds.getDevice_name());
+                    public void onCheckedChanged(CompoundButton buttonView,
+                                                 boolean isChecked) {
 
-
-
+                        DeviceStruct device = (DeviceStruct) list_.get((int)box.getTag());
+                        if(isChecked) {
+                            Log.i("选中", "A A:" + device.getDevice_name());
+                        }else {
+                            Log.i("取消", "B B:" + device.getDevice_name());
+                        }
                     }
                 });
 

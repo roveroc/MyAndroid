@@ -1,6 +1,8 @@
 package com.example.rover.grow_plant;
 
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,27 @@ import java.io.IOException;
 public class MoreFragment extends Fragment implements RoverTCPSocket.ConnectListener{
 
 
+    public interface moreFragmentInterface{
+        public void startOtherFragment();
+    }
+    moreFragmentInterface moreF_callback;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            moreF_callback = (moreFragmentInterface) context;
+            Log.i("onAttach onAttach","112");
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -30,7 +53,9 @@ public class MoreFragment extends Fragment implements RoverTCPSocket.ConnectList
             @Override
             public void onClick(View view) {
 
-                GrowPlantGlobal.getInstance().connectToHost();
+//                GrowPlantGlobal.getInstance().connectToHost();
+                moreF_callback.startOtherFragment();
+
 
             }
         });

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ColorPickerView="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.rover.grow_plant.ColorPickerView
+            android:id="@+id/colorView"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="6dp"
+            android:layout_gravity="center"
+            ColorPickerView:center_color="#FFFFFFFF"
+            ColorPickerView:center_radius="10dp"
+            ColorPickerView:circle_radius="130dp"
+            />
+
+
+        <ImageView
+            android:id="@+id/switchBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/on"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            />
+
+
+        <ImageView
+            android:id="@+id/playPauseBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/play"
+            android:layout_alignBottom="@id/colorView"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            />
+
+
+        <Button
+            android:id="@+id/CustomBtn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text="自定义"
+            android:background="#ffd0d0"
+            android:layout_alignBottom="@id/colorView"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            />
+
+
+    </RelativeLayout>
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:id="@+id/red"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/red_cube"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/yellow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/yellow_cube"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/green"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/green_cube"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/sky"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/sky_cube"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            />
+
+        <ImageView
+            android:id="@+id/blue"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/blue_cube"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/perple"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/perple_cube"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            />
+
+     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        >
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/samll"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            />
+
+        <SeekBar
+            android:id="@+id/lightBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="18"
+            android:layout_gravity="center"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/big"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/lightBarValue"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="100%"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        >
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/low"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            />
+
+        <SeekBar
+            android:id="@+id/speedBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="18"
+            android:layout_gravity="center"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/fast"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/speedBarValue"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="100%"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
