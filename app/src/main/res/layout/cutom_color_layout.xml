@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="100%"/>
+            android:text="255"/>
     </LinearLayout>
 
 
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="100%"/>
+            android:text="255"/>
     </LinearLayout>
 
 
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="100%"/>
+            android:text="255"/>
 
     </LinearLayout>
 
