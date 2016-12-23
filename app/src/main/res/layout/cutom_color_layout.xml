@@ -125,53 +125,53 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_weight="1"
             >
 
             <ImageView
                 android:id="@+id/custom_1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="120px"
+                android:layout_height="120px"
                 android:layout_centerHorizontal="true"
                 android:background="#aa0000" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_weight="1" >
 
             <ImageView
                 android:id="@+id/custom_2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="120px"
+                android:layout_height="120px"
                 android:background="#aa0000"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_weight="1" >
 
             <ImageView
                 android:id="@+id/custom_3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="120px"
+                android:layout_height="120px"
                 android:layout_centerHorizontal="true"
                 android:background="#aa0000" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_weight="1" >
 
             <ImageView
                 android:id="@+id/custom_4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="120px"
+                android:layout_height="120px"
                 android:layout_centerHorizontal="true"
                 android:background="#aa0000" />
         </RelativeLayout>
@@ -194,8 +194,8 @@
 
             <ImageView
                 android:id="@+id/custom_5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="120px"
+                android:layout_height="120px"
                 android:layout_centerHorizontal="true"
                 android:background="#aadd00" />
         </RelativeLayout>
@@ -207,8 +207,8 @@
 
             <ImageView
                 android:id="@+id/custom_6"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="120px"
+                android:layout_height="120px"
                 android:background="#aadd00"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
@@ -220,8 +220,8 @@
 
             <ImageView
                 android:id="@+id/custom_7"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="120px"
+                android:layout_height="120px"
                 android:layout_centerHorizontal="true"
                 android:background="#aadd00" />
         </RelativeLayout>
@@ -233,8 +233,8 @@
 
             <ImageView
                 android:id="@+id/custom_8"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="120px"
+                android:layout_height="120px"
                 android:layout_centerHorizontal="true"
                 android:background="#aadd00" />
         </RelativeLayout>
