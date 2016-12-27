@@ -7,7 +7,6 @@
     android:layout_height="match_parent">
 
 
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
@@ -22,7 +21,7 @@
             android:layout_gravity="center"
             ColorPickerView:center_color="#FFFFFFFF"
             ColorPickerView:center_radius="10dp"
-            ColorPickerView:circle_radius="130dp"
+            ColorPickerView:circle_radius="100dp"
             />
 
 
@@ -34,6 +33,18 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
+            />
+
+
+        <Button
+            android:id="@+id/searchDevice"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:text="搜索设备"
+            android:background="#ffd0d0"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
             />
 
 
@@ -63,13 +74,11 @@
     </RelativeLayout>
 
 
-
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:id="@+id/red"
@@ -130,12 +139,21 @@
 
      </LinearLayout>
 
+    <com.example.rover.grow_plant.LoopView
+        android:id="@+id/looper_view"
+        android:layout_width="500dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        />
+
 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="23dp"
         >
 
         <ImageView
@@ -181,7 +199,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="23dp"
         >
 
         <ImageView
@@ -221,6 +239,8 @@
             />
 
     </LinearLayout>
+
+
 
 
 

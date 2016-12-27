@@ -18,8 +18,11 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.os.Handler;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+import android.content.Context;
 import android.content.SharedPreferences;
+
+import android.support.v4.content.LocalBroadcastManager;
+import android.content.Intent;
 
 import org.w3c.dom.Text;
 
@@ -28,6 +31,9 @@ import org.w3c.dom.Text;
  */
 
 public class Cutom_Color_Activity extends AppCompatActivity implements View.OnClickListener,View.OnLongClickListener{
+
+    private static final String MY_BROADCAST_TAG = "com.example.localbroadcasttest";
+
 
     private ColorPickerView colorView;
     private ImageView       view1;
@@ -38,6 +44,15 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
     private ImageView       view6;
     private ImageView       view7;
     private ImageView       view8;
+
+    private String          color1 = null;
+    private String          color2 = null;
+    private String          color3 = null;
+    private String          color4 = null;
+    private String          color5 = null;
+    private String          color6 = null;
+    private String          color7 = null;
+    private String          color8 = null;
 
     private SeekBar         r_bar;
     private SeekBar         g_bar;
@@ -52,11 +67,17 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
 
     private boolean         scalFlag = true;
 
+
+    private Context context;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.cutom_color_layout);
+
+        context = getApplicationContext();
 
         //按钮
         view1 = (ImageView)findViewById(R.id.custom_1);
@@ -70,14 +91,14 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
 
         //取数据
         SharedPreferences sharedPreferences = this.getSharedPreferences("test", MODE_PRIVATE);
-        String color1 = sharedPreferences.getString("custom_1","");
-        String color2 = sharedPreferences.getString("custom_2","");
-        String color3 = sharedPreferences.getString("custom_3","");
-        String color4 = sharedPreferences.getString("custom_4","");
-        String color5 = sharedPreferences.getString("custom_5","");
-        String color6 = sharedPreferences.getString("custom_6","");
-        String color7 = sharedPreferences.getString("custom_7","");
-        String color8 = sharedPreferences.getString("custom_8","");
+        color1 = sharedPreferences.getString("custom_1","");
+        color2 = sharedPreferences.getString("custom_2","");
+        color3 = sharedPreferences.getString("custom_3","");
+        color4 = sharedPreferences.getString("custom_4","");
+        color5 = sharedPreferences.getString("custom_5","");
+        color6 = sharedPreferences.getString("custom_6","");
+        color7 = sharedPreferences.getString("custom_7","");
+        color8 = sharedPreferences.getString("custom_8","");
 
         if(color1.length() > 0){
             String[] c = color1.split("#");
@@ -153,6 +174,14 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
                     r_bar_textview.setText(mRed+"");
                     g_bar_textview.setText(mGreen+"");
                     b_bar_textview.setText(mBlue+"");
+
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", mRed);
+                    order.putExtra("g", mGreen);
+                    order.putExtra("b", mBlue);
+                    context.sendBroadcast(order);
+
+
                 }
             }
         });
@@ -191,20 +220,103 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
         view8.setOnLongClickListener(this);
 
 
-        //获取控件大小
-//        view1.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                int height = view1.getHeight();
-//                int width = view1.getWidth();
-//                Log.i("size "," == " + height + "  " +  width);
-//            }
-//        });
-
     }
 
 
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.custom_1:{
+                if(color1.length() > 0) {
+                    String[] c = color1.split("#");
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", Integer.parseInt(c[0]));
+                    order.putExtra("g", Integer.parseInt(c[1]));
+                    order.putExtra("b", Integer.parseInt(c[2]));
+                    context.sendBroadcast(order);
+                }
+            }
+                break;
+            case R.id.custom_2:{
+                if(color2.length() > 0) {
+                    String[] c = color2.split("#");
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", Integer.parseInt(c[0]));
+                    order.putExtra("g", Integer.parseInt(c[1]));
+                    order.putExtra("b", Integer.parseInt(c[2]));
+                    context.sendBroadcast(order);
+                }
+            }
+                break;
+            case R.id.custom_3:{
+                if(color3.length() > 0) {
+                    String[] c = color3.split("#");
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", Integer.parseInt(c[0]));
+                    order.putExtra("g", Integer.parseInt(c[1]));
+                    order.putExtra("b", Integer.parseInt(c[2]));
+                    context.sendBroadcast(order);
+                }
+            }
+                break;
+            case R.id.custom_4:{
+                if(color4.length() > 0) {
+                    String[] c = color4.split("#");
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", Integer.parseInt(c[0]));
+                    order.putExtra("g", Integer.parseInt(c[1]));
+                    order.putExtra("b", Integer.parseInt(c[2]));
+                    context.sendBroadcast(order);
+                }
+            }
+                break;
+            case R.id.custom_5:{
+                if(color1.length() > 0) {
+                    String[] c = color1.split("#");
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", Integer.parseInt(c[0]));
+                    order.putExtra("g", Integer.parseInt(c[1]));
+                    order.putExtra("b", Integer.parseInt(c[2]));
+                    context.sendBroadcast(order);
+                }
+            }
+                break;
+            case R.id.custom_6:{
+                if(color6.length() > 0) {
+                    String[] c = color6.split("#");
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", Integer.parseInt(c[0]));
+                    order.putExtra("g", Integer.parseInt(c[1]));
+                    order.putExtra("b", Integer.parseInt(c[2]));
+                    context.sendBroadcast(order);
+                }
+            }
+                break;
+            case R.id.custom_7:{
+                if(color6.length() > 0) {
+                    String[] c = color7.split("#");
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", Integer.parseInt(c[0]));
+                    order.putExtra("g", Integer.parseInt(c[1]));
+                    order.putExtra("b", Integer.parseInt(c[2]));
+                    context.sendBroadcast(order);
+                }
+            }
+                break;
+            case R.id.custom_8:{
+                if(color8.length() > 0) {
+                    String[] c = color8.split("#");
+                    Intent order = new Intent(MY_BROADCAST_TAG);
+                    order.putExtra("r", Integer.parseInt(c[0]));
+                    order.putExtra("g", Integer.parseInt(c[1]));
+                    order.putExtra("b", Integer.parseInt(c[2]));
+                    context.sendBroadcast(order);
+                }
+            }
+                break;
+            default:
+                break;
+
+        }
 
     }
 
