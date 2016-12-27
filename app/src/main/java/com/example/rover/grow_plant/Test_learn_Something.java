@@ -29,6 +29,11 @@ import java.util.Arrays;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
+import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -72,11 +77,57 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
 
 
 
+    private Bluetooth bluetooth;
     private BluetoothAdapter bluetoothAdapter;    //本地蓝牙适配器
     private BluetoothSocket mmSocket = null;
     private BluetoothDevice mmDevice = null;
-    private final String ACTION_NAME_RSSI = "AMOMCU_RSSI"; 	// 其他文件广播的定义必须一致
-    private final String ACTION_CONNECT = "AMOMCU_CONNECT"; 	// 其他文件广播的定义必须一致
+    private BluetoothGattCharacteristic gattCharacteristic;  //写数据
+
+
+    private List<BluetoothGattService> list_service;
+
+    private Bluetooth.GetBluetoothGattService getBluetoothGattService=new Bluetooth.GetBluetoothGattService() {
+        @Override
+        public void bluetoothGattService(List<BluetoothGattService> list) {
+            list_service = list;
+
+            Log.i("server == " ," " + list);
+
+            Log.i("server == " ,"list.cont =  " + list.size());
+
+            for(int i = 0 ;i < list.size() ; i++){
+                System.out.println(list.get(i).getUuid());
+                if(list.get(i).getUuid().toString().equals("0000fff0-0000-1000-8000-00805f9b34fb")){
+                    BluetoothGattService bs = (BluetoothGattService) list_service.get(i);
+                    String UUID_Service = bs.getUuid().toString();
+
+                    List<BluetoothGattCharacteristic> clist = bs.getCharacteristics();
+                    for(int j = 0 ;j < clist.size() ; j++) {
+                        BluetoothGattCharacteristic cc = (BluetoothGattCharacteristic)clist.get(j);
+                        Log.i("clist = ", " uuid == " + cc.getUuid());
+                        if(cc.getUuid().toString().equals("0000fffa-0000-1000-8000-00805f9b34fb"));{
+                            bluetooth.getData("0000fff0-0000-1000-8000-00805f9b34fb","0000fffa-0000-1000-8000-00805f9b34fb",onDataChangeListener);
+
+                            gattCharacteristic = cc;
+
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    Bluetooth.OnDataChangeListener onDataChangeListener=new Bluetooth.OnDataChangeListener() {
+        @Override
+        public void onDataChange(String data) {
+            Log.i("state === ","data" + data);
+        }
+
+        @Override
+        public void onStateChange(String state) {
+            Log.i("state === ","state" + state);
+        }
+    };
 
 
     @Override
@@ -204,11 +255,15 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
                     getPopupWindow();
                     popupWindow.showAtLocation(Test_learn_Something.this.colorView, Gravity.CENTER,0,0);
                     deviceListView.setAdapter(adapter);
-//                    new MyThread().start();
 
                 }else{
                     switchImageView.setBackgroundResource(R.mipmap.on);
                     switchFlag = true;
+
+                    byte [] params = new byte[4];
+                    gattCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
+                    gattCharacteristic.setValue(params);
+                    bluetooth.writeValueToDevice(gattCharacteristic);
                 }
             }
         });
@@ -303,7 +358,15 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
                 bluetoothAdapter.cancelDiscovery();
                 BluetoothDevice device = (BluetoothDevice)deviceArray.get(i-1);
 
-                new ConnectThread(device).start();
+                bluetooth=new Bluetooth(Test_learn_Something.this);
+                bluetooth.connectDevice(device.getAddress(),getBluetoothGattService);
+
+
+
+
+//                String UUID_Characteristic=((BluetoothGattCharacteristic)adapter.getChild(groupPosition,childPosition)).getUuid().toString();
+//
+//                bluetooth.getData(UUID_Service,UUID_Characteristic,onDataChangeListener);
 
             }
         });
@@ -331,91 +394,10 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
             } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) { //搜索完成
                 setProgressBarIndeterminateVisibility(false);
                 Toast.makeText(Test_learn_Something.this, "搜索完成", Toast.LENGTH_SHORT).show();
-//                bluetoothAdapter.cancelDiscovery();
-                new MyThread().start();
+                bluetoothAdapter.cancelDiscovery();
             }
         }
     };
-
-
-    class ConnectThread extends Thread {
-             public ConnectThread(BluetoothDevice device) {
-                     // Use a temporary object that is later assigned to mmSocket,
-                     // because mmSocket is final
-                    BluetoothSocket tmp = null;
-                     mmDevice = device;
-
-                     // Get a BluetoothSocket to connect with the given BluetoothDevice
-                     try {
-                             // MY_UUID is the app's UUID string, also used by the server code
-                            final String SPP_UUID = "48EB9001-F352-5FA0-9B06-8FCAA22602CF";
-                            UUID uuid = UUID.fromString(SPP_UUID);
-                            tmp = device.createRfcommSocketToServiceRecord(uuid);
-                         } catch (IOException e)
-                     {
-
-                     }
-                     mmSocket = tmp;
-                     Log.i("mmsocket","fuck  " + mmSocket);
-                 }
-
-             public void run() {
-                     // Cancel discovery because it will slow down the connection
-                            bluetoothAdapter.cancelDiscovery();
-
-                     try {
-                             // Connect the device through the socket. This will block
-                             // until it succeeds or throws an exception
-                             mmSocket.connect();
-                         } catch (IOException connectException) {
-                             // Unable to connect; close the socket and get out
-                           try {
-                               mmSocket.close();
-                               Log.i("连接异常 : 连接异常 "," ");
-                           } catch (IOException closeException) {
-                               Log.i("连接异常 : ", closeException.getMessage());
-                           }
-                            return;
-                        }
-
-                    // Do work to manage the connection (in a separate thread)
-//                    manageConnectedSocket(mmSocket);
-                 }
-
-            /** Will cancel an in-progress connection, and close the socket */
-            public void cancel() {
-                   try {
-                            mmSocket.close();
-                       } catch (IOException e) { }
-                }
-    }
-
-
-    class MyThread extends Thread
-    {
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    // TODO Auto-generated method stub
-                    try {
-                        //延迟两秒更新
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-            });
-        }
-    }
-
-
-
-
-
 
     @Override
     protected void onDestroy() {
