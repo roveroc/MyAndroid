@@ -70,7 +70,9 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
     int                     lightValue = 100;
     int                     speedValue = 100;
 
+    private MyToast         myToast;
 
+    boolean                 isConnect = false;  //蓝牙是否连接
 
 
     ArrayList<String> list = new ArrayList<String>();
@@ -137,6 +139,15 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
         @Override
         public void onStateChange(String state) {
             Log.i("state 11===11 ","state" + state);
+            if(state.equals("连接成功")){
+                myToast.cancel();
+                isConnect = true;
+                Toast.makeText(Test_learn_Something.this, "连接成功", Toast.LENGTH_SHORT).show();
+            }else{
+                myToast.cancel();
+                Toast.makeText(Test_learn_Something.this, "连接失败", Toast.LENGTH_SHORT).show();
+            }
+
         }
     };
 
@@ -306,7 +317,7 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 speedBarValueText.setText(i+"%");
-                speedValue = i;
+                speedValue = 100-i;
                 sendData((byte)2,(byte)modeValue,(byte)lightValue,(byte)speedValue);
             }
 
@@ -370,7 +381,6 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
 
                 Intent intent = new Intent();
                 intent.setClass(Test_learn_Something.this, Cutom_Color_Activity.class);
-
                 startActivity(intent);
 
             }
@@ -382,16 +392,20 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
         searchDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //搜索蓝牙设备
-                //如果正在搜索，先取消
-                if (bluetoothAdapter.isDiscovering()) {
-                    bluetoothAdapter.cancelDiscovery();
-                }
-                bluetoothAdapter.startDiscovery();
+                if(isConnect){
+                    Toast.makeText(Test_learn_Something.this, "已经连接成功", Toast.LENGTH_SHORT).show();
+                }else {
+                    //搜索蓝牙设备
+                    //如果正在搜索，先取消
+                    if (bluetoothAdapter.isDiscovering()) {
+                        bluetoothAdapter.cancelDiscovery();
+                    }
+                    bluetoothAdapter.startDiscovery();
 
-                getPopupWindow();
-                popupWindow.showAtLocation(Test_learn_Something.this.colorView, Gravity.CENTER,0,0);
-                deviceListView.setAdapter(adapter);
+                    getPopupWindow();
+                    popupWindow.showAtLocation(Test_learn_Something.this.colorView, Gravity.CENTER, 0, 0);
+                    deviceListView.setAdapter(adapter);
+                }
             }
         });
 
@@ -449,18 +463,32 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.i("点击的行 == ","   " + i);
-                popupWindow.dismiss();
-                bluetoothAdapter.cancelDiscovery();
-                BluetoothDevice device = (BluetoothDevice)deviceArray.get(i-1);
+                if(i == 0){
 
-                bluetooth=new Bluetooth(Test_learn_Something.this);
-                bluetooth.connectDevice(device.getAddress(),getBluetoothGattService);
+                }else {
+                    BluetoothDevice device = (BluetoothDevice) deviceArray.get(i - 1);
+                    if(device.getName().equals("AwiseLight")) {
+                        popupWindow.dismiss();
+                        bluetoothAdapter.cancelDiscovery();
 
+                        bluetooth = new Bluetooth(Test_learn_Something.this);
+                        bluetooth.connectDevice(device.getAddress(), getBluetoothGattService);
+
+
+                        View view1 = getLayoutInflater().inflate(R.layout.mytoast_layout, null);
+                        View v = view1.findViewById(R.id.toast_backview);//找到你要设透明背景的layout 的id
+                        v.getBackground().setAlpha(50);//0~255透明度值
+                        myToast = new MyToast(Test_learn_Something.this);
+                        myToast.setText("连接设备中...");//设置要显示的内容
+                        myToast.setView(view1);
+                        myToast.show(10000);
+                    }else{
+                        Toast.makeText(Test_learn_Something.this, "请连接AwiseLight蓝牙设备", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
-
-
 
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -471,7 +499,6 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
             if (action.equals(BluetoothDevice.ACTION_FOUND)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 //搜索到不是已经绑定的蓝牙设备
-                Log.i("fuck: " ,device.getName());
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED)
                 {
                     deviceArray.add(device);
@@ -481,8 +508,8 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
                 }
             } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) { //搜索完成
                 setProgressBarIndeterminateVisibility(false);
-                Toast.makeText(Test_learn_Something.this, "搜索完成", Toast.LENGTH_SHORT).show();
-                bluetoothAdapter.cancelDiscovery();
+//                Toast.makeText(Test_learn_Something.this, "搜索完成", Toast.LENGTH_SHORT).show();
+
             }
         }
     };
@@ -509,13 +536,34 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
     class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context arg0, Intent arg1) {
-            int r = arg1.getIntExtra("r",255);
-            int g = arg1.getIntExtra("g",255);
-            int b = arg1.getIntExtra("g",255);
+            if(arg1.getAction().equals(MY_BROADCAST_TAG)) {
+                int r = arg1.getIntExtra("r", 255);
+                int g = arg1.getIntExtra("g", 255);
+                int b = arg1.getIntExtra("b", 255);
 
-            Log.i("接受到广播" , " = " + r + g + b);
+                Log.i("接受到广播", " = " + r + g + b);
 
-            sendData((byte)1,(byte)r,(byte)g,(byte)b);
+                sendData((byte) 1, (byte) r, (byte) g, (byte) b);
+            }else{
+                String action = arg1.getAction();
+                // 获得已经搜索到的蓝牙设备
+                if (action.equals(BluetoothDevice.ACTION_FOUND)) {
+                    BluetoothDevice device = arg1.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    //搜索到不是已经绑定的蓝牙设备
+                    Log.i("fuck: " ,device.getName());
+                    if (device.getBondState() != BluetoothDevice.BOND_BONDED)
+                    {
+                        deviceArray.add(device);
+                        adapter.add(device.getName());
+                        Log.i("Devices: " ,device.getName());
+                        Log.i("Devices Mac: ", device.getAddress());
+                    }
+                } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) { //搜索完成
+                    Log.i("fuck: " ,"here");
+//                    Toast.makeText(Test_learn_Something.this, "搜索完成", Toast.LENGTH_SHORT).show();
+//                    bluetoothAdapter.cancelDiscovery();
+                }
+            }
         }
     }
 
@@ -532,7 +580,6 @@ public class Test_learn_Something extends AppCompatActivity implements ColorPick
             gattCharacteristic.setValue(params);
             bluetooth.writeValueToDevice(gattCharacteristic);
         }
-        Log.i("哟西","bag");
     }
 
 

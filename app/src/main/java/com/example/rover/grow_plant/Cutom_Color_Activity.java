@@ -162,7 +162,7 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
 
                     if(tempView != null){
                         ViewGroup.LayoutParams  temp = tempView.getLayoutParams();
-                        if(temp.width > 120){
+                        if(temp.width > 100){
                             tempView.setBackgroundColor(Color.rgb(mRed,mGreen,mBlue));
                         }
                     }
@@ -180,8 +180,6 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
                     order.putExtra("g", mGreen);
                     order.putExtra("b", mBlue);
                     context.sendBroadcast(order);
-
-
                 }
             }
         });
@@ -323,7 +321,7 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
     public boolean onLongClick(View v) {
         if(tempView != null){
             ViewGroup.LayoutParams  temp = tempView.getLayoutParams();
-            if(temp.width > 120 && tempid != v.getId()){
+            if(temp.width > 100 && tempid != v.getId()){
                 temp.width -= 20;
                 temp.height -= 20;
                 tempView.setLayoutParams(temp);
@@ -407,6 +405,16 @@ public class Cutom_Color_Activity extends AppCompatActivity implements View.OnCl
 
         //保存key-value对到文件中
         editor.commit();
+
+        //取数据
+        color1 = sharedPreferences.getString("custom_1","");
+        color2 = sharedPreferences.getString("custom_2","");
+        color3 = sharedPreferences.getString("custom_3","");
+        color4 = sharedPreferences.getString("custom_4","");
+        color5 = sharedPreferences.getString("custom_5","");
+        color6 = sharedPreferences.getString("custom_6","");
+        color7 = sharedPreferences.getString("custom_7","");
+        color8 = sharedPreferences.getString("custom_8","");
     }
 
 
